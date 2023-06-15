@@ -6,7 +6,7 @@
     <groupId>edu.upc.dsa</groupId>
     <artifactId>rest-example2</artifactId>
     <packaging>jar</packaging>
-    <version>1.12-SNAPSHOT</version>
+    <version>1.14-SNAPSHOT</version>
     <name>rest-example2</name>
 
     <dependencyManagement>
