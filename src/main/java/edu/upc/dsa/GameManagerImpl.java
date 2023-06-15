@@ -1,14 +1,13 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.Insignia;
 import edu.upc.dsa.models.Objeto;
 import edu.upc.dsa.models.Usuario;
 import edu.upc.dsa.models.dto.TablaCompra;
+import edu.upc.dsa.models.dto.TablaInsignia;
 import edu.upc.dsa.models.dto.UsuarioTO;
 import edu.upc.eetac.dsa.FactorySession;
 import edu.upc.eetac.dsa.Session;
-import edu.upc.eetac.dsa.IUserDAO;
-import edu.upc.eetac.dsa.UserDAOImpl;
-import edu.upc.eetac.dsa.model.User;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -21,6 +20,8 @@ public class GameManagerImpl implements GameManager {
     protected List<Usuario> listaUsuarios;
     HashMap<String, Objeto> Objetos;
     protected List<Objeto> listaObjetos;
+
+    protected List<Insignia> listaInsignias;
     private static GameManager instance;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
 
@@ -217,6 +218,35 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+   public TablaCompra medallas(String correo, String nombreInsignia) {
+       /* Session session = null;
+        try {
+            session = FactorySession.openSession();
+            Usuario usuario = getUserByEmailORM(correo);
+            Insignia medalla = getMedalByNameORM(nombreInsignia);
+
+            if(!medalla.getNombre()){
+                return null;
+            }
+            else {
+                double dinero = usuario.getDsacoins()-objeto.getPrecio();
+                usuario.setDsacoins(dinero);
+                session.update(usuario);
+                TablaCompra tablacompra = new TablaCompra(correo, nombreObjeto);
+                session.save(tablacompra);
+                return tablacompra;
+            }
+        }
+        catch (Exception e){
+
+        }
+        finally {
+            session.close();
+        }*/
+        return null;
+    }
+
+    @Override
     public List<Objeto> listadeObjetos() {
         logger.info("Lista de objetos: " + listaObjetos.toString());
         return this.listaObjetos;
@@ -229,6 +259,28 @@ public class GameManagerImpl implements GameManager {
             session = FactorySession.openSession();
             List<Objeto> listaObjetos = session.findAll(new Objeto().getClass());
             return listaObjetos;
+        }
+        catch (Exception e){
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        return null;
+    }
+    @Override
+    public List<Insignia> listadeInsignias() {
+        logger.info("Lista de objetos: " + listaInsignias.toString());
+        return this.listaInsignias;
+    }
+
+    @Override
+    public List<Objeto> listadeInsigniasORM() {
+        Session session = null;
+        try{
+            session = FactorySession.openSession();
+            List<Objeto> listaInsignias = session.findAll(new Insignia().getClass());
+            return listaInsignias;
         }
         catch (Exception e){
             // LOG
@@ -276,6 +328,28 @@ public class GameManagerImpl implements GameManager {
         }
         return inventario;
     }
+
+    @Override
+    public List<TablaInsignia> listaInsigniasConseguidasPorUsuarioORM(String correo) {
+        Session session = null;
+        List<TablaInsignia> medalla = new ArrayList<>();
+
+        try {
+            session = FactorySession.openSession();
+            HashMap<String, String> usuario = new HashMap<>();
+            usuario.put("correo", correo);
+            List<TablaInsignia> premio = session.findAll(TablaInsignia.class, usuario);
+            medalla.addAll(premio);
+        }
+        catch (Exception e){
+            // LOG
+        }
+        finally{
+            session.close();
+        }
+        return medalla;
+    }
+
 
     @Override
     public void updateUsuario(String nombre, String correo, String password) {
@@ -375,6 +449,24 @@ public class GameManagerImpl implements GameManager {
         }
 
         return objeto;
+    }
+
+    @Override
+    public Insignia getMedalByNameORM(String nombreInsignia) {
+        Session session = null;
+        Insignia medalla = null;
+        try {
+            session = FactorySession.openSession();
+            medalla = (Insignia) session.get(Insignia.class, "nombre", nombreInsignia);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return medalla;
     }
 
     @Override

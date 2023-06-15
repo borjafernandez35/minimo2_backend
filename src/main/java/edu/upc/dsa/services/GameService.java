@@ -3,10 +3,12 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GameManager;
 import edu.upc.dsa.GameManagerImpl;
+import edu.upc.dsa.models.Insignia;
 import edu.upc.dsa.models.Objeto;
 import edu.upc.dsa.models.Usuario;
 import edu.upc.dsa.models.dto.CredencialTO;
 import edu.upc.dsa.models.dto.TablaCompra;
+import edu.upc.dsa.models.dto.TablaInsignia;
 import edu.upc.dsa.models.dto.UsuarioTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -181,6 +183,21 @@ public class GameService {
         GenericEntity<List<Objeto>> entity = new GenericEntity<List<Objeto>>(objeto) {};
         return Response.status(201).entity(entity).build()  ;
     }
+    //Lista insignias
+    @GET
+    @ApiOperation(value = "lista insignias", notes = "asdas")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Insignia.class, responseContainer="List"),
+    })
+    @Path("/listaInsignias")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListaInsignias() {
+        List<Insignia> insignia = this.manager.listadeInsignias();
+        GenericEntity<List<Insignia>> entity = new GenericEntity<List<Insignia>>(insignia) {};
+        return Response.status(201).entity(entity).build()  ;
+    }
+
+
 
     //Datos Usuario
     @GET
@@ -196,6 +213,19 @@ public class GameService {
             return Response.status(201).entity(u).build();
         else
             return Response.status(500).build();
+    }
+    //lista de insignias de un usuario
+    @GET
+    @ApiOperation(value = "lista insignias de un usuario", notes = "asdas")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = TablaInsignia.class, responseContainer="List"),
+    })
+    @Path("/listaInsigniasUsuario/{correo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getlistaInsigniasUsuario(@PathParam("correo") String correo) {
+        List<TablaInsignia> listaInsigniaUsuario = this.manager.listaInsigniasConseguidasPorUsuarioORM(correo);
+        GenericEntity<List<TablaInsignia>> entity = new GenericEntity<List<TablaInsignia>>(listaInsigniaUsuario) {};
+        return Response.status(201).entity(entity).build()  ;
     }
 
     //lista objetos de un usuario

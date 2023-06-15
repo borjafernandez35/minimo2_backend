@@ -1,8 +1,10 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.Insignia;
 import edu.upc.dsa.models.Objeto;
 import edu.upc.dsa.models.Usuario;
 import edu.upc.dsa.models.dto.TablaCompra;
+import edu.upc.dsa.models.dto.TablaInsignia;
 
 import java.util.List;
 
@@ -18,10 +20,15 @@ public interface GameManager {
     public boolean loginORM(String correo, String password); // login usuario en BBDD
    // public Objeto hacerCompra(String Usuario, String nombreObjeto);     // Metodo hacer una compra con arraylist
     public TablaCompra hacerCompraORM(String correo, String nombreObjeto); // Metodo para hacer compra en BBDD
+
+    public TablaCompra medallas(String correo, String nombreInsignia);
     public List<Objeto> listadeObjetos();// get lista de objetos
     public List<Objeto> listadeObjetosORM();
+    public List<Insignia> listadeInsignias();
+    public List<Objeto> listadeInsigniasORM();
     public List<TablaCompra> listadeTablaCompraORM();
     public List<TablaCompra> listaObjetosCompradosPorUsuarioORM(String correo);
+    public List<TablaInsignia> listaInsigniasConseguidasPorUsuarioORM(String correo);
     public void updateUsuario( String nombre, String correo, String password); // Actualizar los datos de un usuario
     //Lista de objetos ordenados precio ascendente
  //   List<Objeto> listadeObjetosOrdenadosPorPrecio();
@@ -31,6 +38,7 @@ public interface GameManager {
 
     Usuario getUserByEmailORM(String correo);
     public Objeto getObjectByNameORM(String nombreObjeto);
+    public Insignia getMedalByNameORM(String nombreInsignia);
     Usuario getUsuarioORM(String correo);
     Objeto getObjetoORM(String nombre);
 

@@ -11,6 +11,9 @@ public class Objeto {
 
     String fotoimagen;
 
+
+
+
     public Objeto() {
     }
 

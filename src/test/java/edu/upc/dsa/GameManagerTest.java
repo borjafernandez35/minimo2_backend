@@ -135,13 +135,17 @@ public class GameManagerTest {
 
     @Test
     public void addUsuarioORM() {
-        Usuario usuario = new Usuario("Jose1","m","1");
+        Usuario usuario = new Usuario("Carlos","ñ","1");
+
         manager.addUsuario2(usuario);
     }
 
     @Test
     public void updateUsuario() {
-        manager.updateUsuario("Jose","ñ","1");
+        manager.updateUsuario("Borja","ñ","betico");
+
+//            manager.updateUsuario("Marcos","0","123");
+
     }
 
 }
